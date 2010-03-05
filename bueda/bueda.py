@@ -43,6 +43,13 @@ class Semantic(object):
     '''
     Semantic(types, concept_id, original)
 
+    Represents the returned semantic concepts from Bueda API.
+
+    Fields
+    ------
+      types : A list of types (as strings)
+      concept_id : A unique id for this concept
+      original : The list of inputs that led to this result
     '''
     def __init__(self, types, concept_id, original):
         self.types = types
@@ -111,6 +118,10 @@ def init(api_key):
     If you do not have one, get your API key at http://www.bueda.com/
 
     By default, the API library uses a demo key that is limited.
+
+    Parameters
+    ----------
+      api_key : API KEY as a string
     '''
     global API_KEY
     API_KEY = api_key
