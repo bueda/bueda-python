@@ -26,9 +26,11 @@ Bueda Python Library
 Example Usage
 -------------
 
-import bueda
-enriched = bueda.enrich(['toyotaprius', 'hybrid']) 
-print enriched.canonical
+::
+
+    import bueda
+    enriched = bueda.enrich(['toyotaprius', 'hybrid'])
+    print enriched.canonical
 '''
 import simplejson
 import urllib
