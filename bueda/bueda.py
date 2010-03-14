@@ -31,6 +31,11 @@ Example Usage
     import bueda
     enriched = bueda.enrich(['toyotaprius', 'hybrid'])
     print enriched.canonical
+
+By default, the API library uses a demo key that is very limited in terms of
+how many queries you can use it for. We recommend that you use your own key (by
+calling `init()` or setting bueda.API_KEY). If you do not have one, get your
+API key at http://www.bueda.com/
 '''
 import simplejson
 import urllib
@@ -115,9 +120,10 @@ def init(api_key):
 
     Set the API key to be `api_key`.
 
-    If you do not have one, get your API key at http://www.bueda.com/
-
-    By default, the API library uses a demo key that is limited.
+    By default, the API library uses a demo key that is very limited in terms
+    of how many queries you can use it for. We recommend that you use your own
+    key (by calling `init()` or setting bueda.API_KEY). If you do not have one,
+    get your API key at http://www.bueda.com/
 
     Parameters
     ----------
