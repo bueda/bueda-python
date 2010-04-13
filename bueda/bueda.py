@@ -93,13 +93,13 @@ class Enriched(object):
 
     Fields
     ------
-      split_tags : split tags as list of strings
+      split : split tags as list of strings
       canonical : canonical string representations (list of string)
       categories : list of Category objects
       semantic : list of Semantic objects
     '''
-    def __init__(self, split_tags, canonical, categories, semantic):
-        self.split_tags = split_tags
+    def __init__(self, split, canonical, categories, semantic):
+        self.split = split
         self.canonical = canonical
         self.categories = categories
         self.semantic = semantic
@@ -108,7 +108,7 @@ class Enriched(object):
 
     def __repr__(self):
         return 'Enriched(%s, %s, %s, %s)' % (
-                        self.split_tags,
+                        self.split,
                         self.canonical,
                         self.categories,
                         self.semantic)
@@ -149,7 +149,7 @@ def enrich(tags, api_key=None):
     data = simplejson.load( urllib2.urlopen(url))
     result = data['result']
     return Enriched(
-            split_tags=result['split_tags'],
+            split=result['split'],
             canonical=result['canonical'],
             categories=[Category(c['name'], c['confidence']) for c in result['categories']],
             semantic=[Semantic(s['types'], s['concept_id'], s['original']) for s in result['semantic']],
