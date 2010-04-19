@@ -1,4 +1,5 @@
-from setuptools import setup
+from distutils.core import setup
+execfile('bueda/bueda_version.py')
 
 long_description = '''\
 Bueda API Wrapper
@@ -25,7 +26,7 @@ classifiers = [
 ]
 
 setup(name = 'bueda',
-      version = '0.1',
+      version = __version__,
       description = 'Wrapper for Bueda API',
       long_description = long_description,
       author = 'Bueda',
@@ -34,7 +35,7 @@ setup(name = 'bueda',
       platforms = ['Any'],
       classifiers = classifiers,
       url = 'http://www.bueda.com',
-      packages = setuptools.find_packages(exclude='tests'),
+      packages = ['bueda'],
       )
 
 
