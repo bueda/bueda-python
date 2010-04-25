@@ -1,20 +1,6 @@
 from distutils.core import setup
 execfile('bueda/bueda_version.py')
-
-long_description = '''\
-Bueda API Wrapper
------------------
-
-Makes it easier to call the Bueda API from within Python.
-
-Using it is a simple as::
-
-    import bueda
-    enriched = bueda.enrich(['toyotaprius', 'hybrid']) 
-    print enriched.canonical
-
-To use it, get your API key at `http://www.bueda.com/ <http://www.bueda.com>`_
-'''
+long_description = file('README.rst').read()
 
 classifiers = [
     'Development Status :: 4 - Beta',
