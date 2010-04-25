@@ -29,6 +29,7 @@ Example Usage
 ::
 
     import bueda
+    bueda.API_KEY = 'vImIEj5T0n7ldfjl8TO0ADTIRdRcvbRkvagiEw'
     enriched = bueda.enrich(['toyotaprius', 'hybrid'])
     print enriched.canonical
 
@@ -144,6 +145,11 @@ def enrich(tags, api_key=None):
     -------
       enriched : Enriched
     '''
+    def _to_utf8(s):
+        if type(s) is unicode:
+            return s.encode('utf8')
+        return s
+    tags = map(_to_utf8, tags)
     tags = map(urllib2.quote, tags)
     url = API_URL + ('enriched?callback=&tags=%s&apikey=%s' % (','.join(tags), API_KEY))
     data = simplejson.load( urllib2.urlopen(url))
