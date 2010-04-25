@@ -1,3 +1,6 @@
+2010-04-25 Luis Pedro Coelho <luispedro@luispedro.org>
+	* Fix unicode tag processing
+
 2010-04-22 Luis Pedro Coelho <luispedro@luispedro.org>
 	* Improved documentation
 
