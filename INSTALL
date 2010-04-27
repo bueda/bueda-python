@@ -1,0 +1,14 @@
+=======
+INSTALL
+=======
+
+Use `python setup.py install`
+
+Alternatively, bueda can be installed with either pip or easy_install:
+
+pip install bueda
+
+or
+
+easy_install bueda
+
