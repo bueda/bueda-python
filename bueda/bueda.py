@@ -29,7 +29,7 @@ Example Usage
 ::
 
     import bueda
-    bueda.API_KEY = 'vImIEj5T0n7ldfjl8TO0ADTIRdRcvbRkvagiEw'
+    bueda.API_KEY = '2EvC9SVR0Y5vBt48dA1xMwkAxv8XP15OZ7ulsw'
     enriched = bueda.enrich(['toyotaprius', 'hybrid'])
     print enriched.canonical
 
@@ -42,7 +42,8 @@ import simplejson
 import urllib
 import urllib2
 
-API_KEY = 'vImIEj5T0n7ldfjl8TO0ADTIRdRcvbRkvagiEw'
+DEMO_KEY = '2EvC9SVR0Y5vBt48dA1xMwkAxv8XP15OZ7ulsw'
+API_KEY = DEMO_KEY
 API_URL = 'http://api.bueda.com/'
 
 class Semantic(object):
@@ -133,6 +134,23 @@ def init(api_key):
     global API_KEY
     API_KEY = api_key
 
+
+def _get_api_key(api_key):
+    if api_key is not None:
+        return api_key
+    if API_KEY == DEMO_KEY:
+        demo_key_message = '''\
+You are using the Bueda demo key! Everything will work, but this key has a low
+priority and is only valid for a limited number of queries.
+
+Get your own key at http://www.bueda.com.
+
+'''
+        import warnings
+        warnings.warn(demo_key_message)
+    return API_KEY
+
+
 def enrich(tags, api_key=None):
     '''
     enriched = enrich([tag0, tag1, tag2, ...], api_key={bueda.API_KEY})
@@ -151,7 +169,8 @@ def enrich(tags, api_key=None):
         return s
     tags = map(_to_utf8, tags)
     tags = map(urllib2.quote, tags)
-    url = API_URL + ('enriched?callback=&tags=%s&apikey=%s' % (','.join(tags), API_KEY))
+    api_key = _get_api_key(api_key)
+    url = API_URL + ('enriched?callback=&tags=%s&apikey=%s' % (','.join(tags), api_key))
     data = simplejson.load( urllib2.urlopen(url))
     result = data['result']
     return Enriched(

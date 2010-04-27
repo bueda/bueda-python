@@ -6,7 +6,7 @@ Makes it easier to call the Bueda API from within Python.
 Using it is a simple as::
 
     import bueda
-    bueda.API_KEY = 'vImIEj5T0n7ldfjl8TO0ADTIRdRcvbRkvagiEw'
+    bueda.API_KEY = '2EvC9SVR0Y5vBt48dA1xMwkAxv8XP15OZ7ulsw'
     enriched = bueda.enrich(['toyotaprius', 'hybrid']) 
     print enriched.canonical
 
