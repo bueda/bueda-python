@@ -177,6 +177,6 @@ def enrich(tags, api_key=None):
             split=result['split'],
             canonical=result['canonical'],
             categories=[Category(c['name'], c['confidence']) for c in result['categories']],
-            semantic=[Semantic(s['types'], s['concept_id'], s['original']) for s in result['semantic']],
+            semantic=[Semantic(s['types'], s['uri'], s['original']) for s in result['semantic']],
             )
 
