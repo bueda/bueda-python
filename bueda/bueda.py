@@ -59,7 +59,7 @@ class Semantic(object):
       original : The list of inputs that led to this result
     '''
     def __init__(self, types, concept_id, original):
-        self.types = types
+        self.types = [typ['name'] for typ in types]
         self.concept_id = concept_id
         self.original = original
     def __str__(self):
@@ -177,6 +177,6 @@ def enrich(tags, api_key=None):
             split=result['split'],
             canonical=result['canonical'],
             categories=[Category(c['name'], c['confidence']) for c in result['categories']],
-            semantic=[Semantic(s['types'], s['concept_id'], s['original']) for s in result['semantic']],
+            semantic=[Semantic(s['types'], s['uri'], s['original']) for s in result['semantic']],
             )
 
