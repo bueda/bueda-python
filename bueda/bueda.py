@@ -159,6 +159,15 @@ def _call_method(method, api_key, **kwargs):
         url += ('&%s=%s' % key_value)
     return simplejson.load( urllib2.urlopen(url))
 
+def _prepare_tags(tags):
+    def _to_utf8(s):
+        if type(s) is unicode:
+            return s.encode('utf8')
+        return s
+    tags = map(_to_utf8, tags)
+    tags = map(urllib2.quote, tags)
+    return ','.join(tags)
+
 def enrich(tags, api_key=None):
     '''
     enriched = enrich([tag0, tag1, tag2, ...], api_key={bueda.API_KEY})
@@ -171,14 +180,7 @@ def enrich(tags, api_key=None):
     -------
       enriched : Enriched
     '''
-    def _to_utf8(s):
-        if type(s) is unicode:
-            return s.encode('utf8')
-        return s
-    tags = map(_to_utf8, tags)
-    tags = map(urllib2.quote, tags)
-    api_key = _get_api_key(api_key)
-    data = _call_method('enriched', api_key, tags=(','.join(tags)))
+    data = _call_method('enriched', api_key, tags=_prepare_tags(tags))
     result = data['result']
     return Enriched(
             split=result['split'],
@@ -186,6 +188,7 @@ def enrich(tags, api_key=None):
             categories=[Category(c['name'], c['confidence']) for c in result['categories']],
             semantic=[Semantic(s['types'], s['uri'], s['original']) for s in result['semantic']],
             )
+
 
 def version(api_key=None):
     '''
@@ -205,4 +208,27 @@ def version(api_key=None):
     api_key = _get_api_key(api_key)
     data = _call_method('version', api_key)
     return data['result']['version']
+
+
+def split(tags, api_key=None):
+    '''
+    split_tags = split([tag0, tag1, tag2, ...], api_key={bueda.API_KEY})
+
+    Splits multi-word tags into words.
+
+    The the tag already contains spaces or if it is composed of a single word,
+    the original tag is returned.
+
+    Parameters
+    ----------
+      tags :    List of tags as strings
+      api_key : API key to use. If None, it uses bueda.API_KEY
+    Returns
+    -------
+      split_tags : A list of split tags
+    '''
+    data = _call_method('split', api_key, tags=_prepare_tags(tags))
+    result = data['result']
+    return result['split']
+
 
