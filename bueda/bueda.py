@@ -42,6 +42,8 @@ import simplejson
 import urllib
 import urllib2
 
+from bueda_version import __version__
+
 DEMO_KEY = '2EvC9SVR0Y5vBt48dA1xMwkAxv8XP15OZ7ulsw'
 API_KEY = DEMO_KEY
 API_URL = 'http://api.bueda.com/'
@@ -151,6 +153,12 @@ Get your own key at http://www.bueda.com.
     return API_KEY
 
 
+def _call_method(method, api_key, **kwargs):
+    url = API_URL + method + '?apikey=' + _get_api_key(api_key)
+    for key_value in kwargs.iteritems():
+        url += ('&%s=%s' % key_value)
+    return simplejson.load( urllib2.urlopen(url))
+
 def enrich(tags, api_key=None):
     '''
     enriched = enrich([tag0, tag1, tag2, ...], api_key={bueda.API_KEY})
@@ -170,8 +178,7 @@ def enrich(tags, api_key=None):
     tags = map(_to_utf8, tags)
     tags = map(urllib2.quote, tags)
     api_key = _get_api_key(api_key)
-    url = API_URL + ('enriched?callback=&tags=%s&apikey=%s' % (','.join(tags), api_key))
-    data = simplejson.load( urllib2.urlopen(url))
+    data = _call_method('enriched', api_key, tags=(','.join(tags)))
     result = data['result']
     return Enriched(
             split=result['split'],
@@ -179,4 +186,23 @@ def enrich(tags, api_key=None):
             categories=[Category(c['name'], c['confidence']) for c in result['categories']],
             semantic=[Semantic(s['types'], s['uri'], s['original']) for s in result['semantic']],
             )
+
+def version(api_key=None):
+    '''
+    version = bueda.version(api_key={bueda.API_KEY})
+
+    Returns the bueda API version
+
+    Note that this is the API version, *not* the library version. Check
+    `__version__` for that.
+    Parameters
+    ----------
+      api_key : API key (default: bueda.API_KEY)
+    Returns
+    -------
+      version : API version (as a string)
+    '''
+    api_key = _get_api_key(api_key)
+    data = _call_method('version', api_key)
+    return data['result']['version']
 
