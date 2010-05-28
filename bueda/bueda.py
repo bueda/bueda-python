@@ -44,13 +44,13 @@ import urllib2
 
 from bueda_version import __version__
 
-DEMO_KEY = '2EvC9SVR0Y5vBt48dA1xMwkAxv8XP15OZ7ulsw'
+DEMO_KEY = 'UlBuDaK5zeIAIRfBma2NtOSVSnHXplRIgMIPZQ'
 API_KEY = DEMO_KEY
 API_URL = 'http://api.bueda.com/'
 
 class Semantic(object):
     '''
-    Semantic(types, concept_id, original)
+    Semantic(name, types, concept_id, original)
 
     Represents the returned semantic concepts from Bueda API.
 
@@ -60,7 +60,8 @@ class Semantic(object):
       concept_id : A unique id for this concept
       original : The list of inputs that led to this result
     '''
-    def __init__(self, types, concept_id, original):
+    def __init__(self, name, types, concept_id, original):
+        self.name = name
         self.types = [typ['name'] for typ in types]
         self.concept_id = concept_id
         self.original = original
@@ -68,7 +69,8 @@ class Semantic(object):
         return '<Semantic %s>' % self.concept_id
 
     def __repr__(self):
-        return 'Semantic(%s, %s, %s)' % (
+        return 'Semantic(%s, %s, %s, %s)' % (
+                self.name,
                 self.types,
                 self.concept_id,
                 self.original)
