@@ -234,3 +234,23 @@ def split(tags, api_key=None):
     return result['split']
 
 
+def expanded(tags, api_key=None):
+    '''
+    expanded_tags = expanded([tag0, tag1, tag2, ...], api_key={bueda.API_KEY})
+
+    The expanded call expands the submitted tags to aliases, categories and
+    terms. This is especially useful for expanding coverage when searching.
+
+    Parameters
+    ----------
+      tags :    List of tags as strings
+      api_key : API key to use. If None, it uses bueda.API_KEY
+    Returns
+    -------
+      expanded_tags : A list of split tags
+    '''
+    data = _call_method('expanded', api_key, tags=_prepare_tags(tags))
+    result = data['result']
+    return result['expanded']
+
+
