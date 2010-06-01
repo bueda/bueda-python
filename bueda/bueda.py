@@ -292,3 +292,23 @@ def semantics(tags, api_key=None):
     result = data['result']
     return [Semantic(s['name'], s['types'], s['uri'], s['original']) for s in result['semantic']]
 
+
+def canonical(tags, api_key=None):
+    '''
+    canonical_tags = canonical([tag0, tag1, tag2, ...], api_key={bueda.API_KEY})
+
+    Returns a canonical human-readible tag for each input tag.
+
+    Parameters
+    ----------
+      tags :    List of tags as strings
+      api_key : API key to use. If None, it uses bueda.API_KEY
+    Returns
+    -------
+      canonical_tags : List of canonical tags as strings
+    '''
+    data = _call_method('canonical', api_key, tags=_prepare_tags(tags))
+    result = data['result']
+    return result['canonical']
+
+
