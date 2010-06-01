@@ -238,8 +238,8 @@ def expanded(tags, api_key=None):
     '''
     expanded_tags = expanded([tag0, tag1, tag2, ...], api_key={bueda.API_KEY})
 
-    The expanded call expands the submitted tags to aliases, categories and
-    terms. This is especially useful for expanding coverage when searching.
+    Expands the submitted tags to aliases, categories and terms. This is
+    especially useful for expanding coverage when searching.
 
     Parameters
     ----------
@@ -253,4 +253,23 @@ def expanded(tags, api_key=None):
     result = data['result']
     return result['expanded']
 
+
+def categories(tags, api_key=None):
+    '''
+    tag_categories = categories([tag0, tag1, tag2, ...], api_key={bueda.API_KEY})
+
+    Returns the categories associated with a tag as a list of `Category`
+    objects.
+
+    Parameters
+    ----------
+      tags :    List of tags as strings
+      api_key : API key to use. If None, it uses bueda.API_KEY
+    Returns
+    -------
+      tag_categories : A list of `Category` objects
+    '''
+    data = _call_method('categories', api_key, tags=_prepare_tags(tags))
+    result = data['result']
+    return [Category(c['name'], c['confidence']) for c in result['categories']]
 
