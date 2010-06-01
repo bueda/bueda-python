@@ -273,3 +273,22 @@ def categories(tags, api_key=None):
     result = data['result']
     return [Category(c['name'], c['confidence']) for c in result['categories']]
 
+
+def semantics(tags, api_key=None):
+    '''
+    tag_semantics = semantics([tag0, tag1, tag2, ...], api_key={bueda.API_KEY})
+
+    Returns the semantic meaning of each tag as a list of `semantic` objects.
+
+    Parameters
+    ----------
+      tags :    List of tags as strings
+      api_key : API key to use. If None, it uses bueda.API_KEY
+    Returns
+    -------
+      tag_semantics : A list of `Semantic` objects
+    '''
+    data = _call_method('categories', api_key, tags=_prepare_tags(tags))
+    result = data['result']
+    return [Semantic(s['name'], s['types'], s['uri'], s['original']) for s in result['semantic']]
+
