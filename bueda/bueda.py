@@ -66,7 +66,7 @@ class Semantic(object):
         self.concept_id = concept_id
         self.original = original
     def __str__(self):
-        return '<Semantic %s>' % self.concept_id
+        return '<Semantic %s>' % self.concept_id.encode('utf-8')
 
     def __repr__(self):
         return 'Semantic(%s, %s, %s, %s)' % (
@@ -89,7 +89,7 @@ class Category(object):
         self.confidence = float(confidence)
 
     def __str__(self):
-        return '<Category %s (conf: %s)>' % (self.name, self.confidence)
+        return '<Category %s (conf: %s)>' % (self.name.encode('utf-8'), self.confidence)
     def __repr__(self):
         return 'Category(%s, %s)' % (self.name, self.confidence)
 
@@ -110,7 +110,7 @@ class Enriched(object):
         self.categories = categories
         self.semantic = semantic
     def __str__(self):
-        return '<Enriched %s>' % self.canonical
+        return '<Enriched %s>' % self.canonical.encode('utf-8')
 
     def __repr__(self):
         return 'Enriched(%s, %s, %s, %s)' % (
