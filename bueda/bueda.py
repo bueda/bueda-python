@@ -73,7 +73,6 @@ class BuedaApi(object):
                 if hasattr(key_value, '__iter__'):
                     key_value = u','.join(key_value)
                 url += '&%s=%s' % urllib2.quote(key_value.encode('utf-8'))
-            print url
             return BuedaApiResponse(urllib2.urlopen(url))
         return call_method.__get__(self)
 
