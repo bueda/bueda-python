@@ -1,6 +1,7 @@
 import bueda
 
 def test_categories():
-    cats = bueda.categories(['toyota','prius'])
+    b = bueda.BuedaApi()
+    cats = b.categories(['toyota','prius']).categories
     assert type(cats) is list
     assert cats

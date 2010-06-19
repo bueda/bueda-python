@@ -1,6 +1,7 @@
 import bueda
 
 def test_semantics():
-    sems = bueda.categories(['toyota','prius'])
+    b = bueda.BuedaApi()
+    sems = b.categories(['toyota','prius']).categories
     assert type(sems) is list
     assert sems

@@ -39,14 +39,12 @@ calling `init()`). If you do not have one, get your
 API key at http://www.bueda.com/
 '''
 import simplejson
-import urllib
 import urllib2
 from functools import partial
 
 from bueda_version import __version__
 
 DEMO_KEY = 'UlBuDaK5zeIAIRfBma2NtOSVSnHXplRIgMIPZQ'
-API_KEY = DEMO_KEY
 API_URL = 'http://api.bueda.com/'
 
 class BuedaApi(object):
@@ -68,9 +66,14 @@ class BuedaApi(object):
             url = API_URL + method + '?apikey=' + self.api_key
             for arg in args:
                 # Assume any non-keyword arg is just tags
-                url += ('&tags=%s' % arg)
+                if hasattr(arg, '__iter__'):
+                    arg = u','.join(arg)
+                url += '&tags=%s' % urllib2.quote(arg.encode('utf-8'))
             for key_value in kwargs.iteritems():
-                url += ('&%s=%s' % key_value)
+                if hasattr(key_value, '__iter__'):
+                    key_value = u','.join(key_value)
+                url += '&%s=%s' % urllib2.quote(key_value.encode('utf-8'))
+            print url
             return BuedaApiResponse(urllib2.urlopen(url))
         return call_method.__get__(self)
 

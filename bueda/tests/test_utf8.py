@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
 import bueda
+
 def test_unicode():
-    assert bueda.enrich([u'Luís Pedro Coelho'])
+    b = bueda.BuedaApi()
+    assert b.enriched([u'Luís Pedro Coelho'])

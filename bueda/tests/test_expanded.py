@@ -1,7 +1,8 @@
 import bueda
 
 def test_expanded():
-    expanded = bueda.expanded(['toyota','prius'])
+    b = bueda.BuedaApi()
+    expanded = b.expanded(['toyota','prius']).expanded
     assert expanded
     assert type(expanded) is list
 
