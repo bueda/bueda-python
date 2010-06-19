@@ -29,8 +29,8 @@ Example Usage
 ::
 
     import bueda
-    bueda.init('2EvC9SVR0Y5vBt48dA1xMwkAxv8XP15OZ7ulsw')
-    enriched = bueda.enrich(['toyotaprius', 'hybrid'])
+    b = bueda.BuedaApi('2EvC9SVR0Y5vBt48dA1xMwkAxv8XP15OZ7ulsw')
+    enriched = bueda.enriched(['toyotaprius', 'hybrid'])
     print enriched.canonical
 
 By default, the API library uses a demo key that is very limited in terms of
@@ -75,15 +75,6 @@ class BuedaApi(object):
                 url += '&%s=%s' % urllib2.quote(key_value.encode('utf-8'))
             return BuedaApiResponse(urllib2.urlopen(url))
         return call_method.__get__(self)
-
-    def _prepare_tags(tags):
-        def _to_utf8(s):
-            if type(s) is unicode:
-                return s.encode('utf8')
-            return s
-        tags = map(_to_utf8, tags)
-        tags = map(urllib2.quote, tags)
-        return ','.join(tags)
 
 class BuedaApiResponse(object):
     def __init__(self, data):
