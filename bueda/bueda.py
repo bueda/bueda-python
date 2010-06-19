@@ -35,7 +35,7 @@ Example Usage
 
 By default, the API library uses a demo key that is very limited in terms of
 how many queries you can use it for. We recommend that you use your own key (by
-calling `init()`). If you do not have one, get your
+calling `BuedaApi(api_key=<your key>`). If you do not have one, get your
 API key at http://www.bueda.com/
 '''
 import simplejson

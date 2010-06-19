@@ -1,3 +1,6 @@
+2010-06-19 Christopher Peplin <peplin@bueda.com>
+	* Strip some weight and return generic responses
+
 2010-04-25 Luis Pedro Coelho <luispedro@luispedro.org>
 	* Fix unicode tag processing
 
