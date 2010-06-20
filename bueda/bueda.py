@@ -80,10 +80,7 @@ class BuedaApiResponse(object):
     def __init__(self, data):
         response = simplejson.load(data)
         self.query = response['query']
-        result = response['result']
-        self.success = result['success']
-        result.pop('success')
-        for key, value in result.iteritems():
+        for key, value in response['result'].iteritems():
             self.__setattr__(key, value)
 
     def __unicode__(self):
