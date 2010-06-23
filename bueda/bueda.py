@@ -51,15 +51,11 @@ class BuedaApi(object):
     def __init__(self, api_key=None):
         self.api_key = api_key or DEMO_KEY
         if not api_key:
-            demo_key_message = '''\
-    You are using the Bueda demo key! Everything will work, but this key has a low
-    priority and is only valid for a limited number of queries.
-
-    Get your own key at http://www.bueda.com.
-
-    '''
             import warnings
-            warnings.warn(demo_key_message)
+            warnings.warn('You are using the Bueda demo key! '
+                'Everything will work, but this key has a low priority and is '
+                'only valid for a limited number of queries. '
+                'Get your own key at http://www.bueda.com.')
 
     def __getattr__(self, method, **kwargs):
         def call_method(self, *args, **kwargs):
@@ -73,12 +69,12 @@ class BuedaApi(object):
                 if hasattr(key_value, '__iter__'):
                     key_value = u','.join(key_value)
                 url += '&%s=%s' % urllib2.quote(key_value.encode('utf-8'))
-            return BuedaApiResponse(urllib2.urlopen(url))
+            return BuedaApiResponse(urllib2.urlopen(url).read())
         return call_method.__get__(self)
 
 class BuedaApiResponse(object):
     def __init__(self, data):
-        response = simplejson.load(data)
+        response = simplejson.loads(unicode(data))
         self.query = response['query']
         for key, value in response['result'].iteritems():
             self.__setattr__(key, value)
