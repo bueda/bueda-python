@@ -65,10 +65,13 @@ class BuedaApi(object):
                 if hasattr(arg, '__iter__'):
                     arg = u','.join(arg)
                 url += '&tags=%s' % urllib2.quote(arg.encode('utf-8'))
-            for key_value in kwargs.iteritems():
-                if hasattr(key_value, '__iter__'):
-                    key_value = u','.join(key_value)
-                url += '&%s=%s' % urllib2.quote(key_value.encode('utf-8'))
+            for key, value in kwargs.items():
+                if hasattr(value, '__iter__'):
+                    for item in value:
+                        url += u'&%s=%s' % (key, item)
+                else:
+                    url += ('&%s=%s'
+                            % (key, urllib2.quote(value.encode('utf-8'))))
             return BuedaApiResponse(urllib2.urlopen(url).read())
         return call_method.__get__(self)
 
