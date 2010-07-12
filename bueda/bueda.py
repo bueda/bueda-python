@@ -48,8 +48,9 @@ DEMO_KEY = 'UlBuDaK5zeIAIRfBma2NtOSVSnHXplRIgMIPZQ'
 API_URL = 'http://api.bueda.com/'
 
 class BuedaApi(object):
-    def __init__(self, api_key=None):
+    def __init__(self, api_key=None, api_url=None):
         self.api_key = api_key or DEMO_KEY
+        self.api_url = api_url or API_URL
         if not api_key:
             import warnings
             warnings.warn('You are using the Bueda demo key! '
@@ -59,7 +60,7 @@ class BuedaApi(object):
 
     def __getattr__(self, method, **kwargs):
         def call_method(self, *args, **kwargs):
-            url = API_URL + method + '?apikey=' + self.api_key
+            url = self.api_url + method + '?apikey=' + self.api_key
             for arg in args:
                 # Assume any non-keyword arg is just tags
                 if hasattr(arg, '__iter__'):
@@ -90,3 +91,4 @@ class BuedaApiResponse(object):
 
     def __repr__(self):
         return self.__unicode__()
+
